@@ -49,12 +49,27 @@ export default function Home() {
 
       return false;
     })
-    .sort((a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime())
-    .map(transaction => ({
-      date: format(parseISO(transaction.date), 'd MMMM yyyy', { locale: tr }),
-      income: transaction.type === BudgetType.Income ? transaction.amount : 0,
-      expense: transaction.type === BudgetType.Expense ? transaction.amount : 0
-    }));
+    .reduce((acc: { date: string; income: number; expense: number }[], transaction) => {
+      const dateStr = format(parseISO(transaction.date), 'd MMMM yyyy', { locale: tr });
+
+      const existingEntry = acc.find(item => item.date === dateStr);
+
+      if (existingEntry) {
+        if (transaction.type === BudgetType.Income) {
+          existingEntry.income += transaction.amount;
+        } else {
+          existingEntry.expense += transaction.amount;
+        }
+        return acc;
+      }
+
+      return [...acc, {
+        date: dateStr,
+        income: transaction.type === BudgetType.Income ? transaction.amount : 0,
+        expense: transaction.type === BudgetType.Expense ? transaction.amount : 0
+      }];
+    }, [])
+    .sort((a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime());
 
   const calculateTotalForPeriod = (type: BudgetType) => {
     return transactions
@@ -95,8 +110,6 @@ export default function Home() {
         <PriceCard color="primary" title="Toplam Kalan" price={remainingBalance} />
       </div>
 
-
-
       <div className="flex h-auto lg:h-[460px]  justify-between mt-4 lg:mt-8 flex-col lg:flex-row gap-8 ">
         <div className="bg-indigo-100 dark:bg-dark-primary p-4 h-full flex flex-1 flex-col rounded-lg shadow-md">
           <div className="flex justify-between items-center">
@@ -124,9 +137,7 @@ export default function Home() {
                 ))}
               </select>
             </div>}
-
           </div>
-
 
           <div className="flex justify-center items-center mt-4">
             {
