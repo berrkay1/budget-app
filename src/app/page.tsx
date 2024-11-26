@@ -77,8 +77,13 @@ export default function Home() {
       .reduce((total, item) => total + item.amount, 0);
   };
 
-  const totalIncome = calculateTotalForPeriod(BudgetType.Income);
-  const totalExpense = calculateTotalForPeriod(BudgetType.Expense);
+  const totalIncomePeriod = calculateTotalForPeriod(BudgetType.Income);
+  const totalExpensePeriod = calculateTotalForPeriod(BudgetType.Expense);
+  const remainingBalancePeriod = totalIncomePeriod - totalExpensePeriod;
+
+
+  const totalIncome = transactions.filter(t => t.type === BudgetType.Income).reduce((total, item) => total + item.amount, 0);
+  const totalExpense = transactions.filter(t => t.type === BudgetType.Expense).reduce((total, item) => total + item.amount, 0);
   const remainingBalance = totalIncome - totalExpense;
 
   return (
@@ -128,7 +133,7 @@ export default function Home() {
               transactions.length > 0 ?
                 <>
                   {
-                    remainingBalance == 0 ?
+                    remainingBalancePeriod == 0 ?
                       <InfoCard text="Bu ay için gelir gider bilgisi bulunamadı" type="info" />
                       :
                       <div className="w-full h-[300px] sm:h-[400px]">
