@@ -193,7 +193,7 @@ export default function Home() {
               transactions.length > 0 ?
                 <>
                   {transactions.map((transaction, idx) => (
-                    idx < 3 && <LatestTransactions key={transaction.id} transaction={transaction} />
+                    <LatestTransactions key={transaction.id} transaction={transaction} />
                   ))}
                 </>
                 : <InfoCard text="Henüz Gelir Gider işlemi yapılmadı" type="info" />
