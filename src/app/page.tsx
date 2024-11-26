@@ -97,8 +97,7 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div className="text-xl font-bold text-title dark:text-dark-title mb-3">Gelir Gider Grafiği</div>
 
-
-            <div className="flex gap-4 mb-4">
+            {transactions.length > 0 && <div className="flex gap-4 mb-4">
               <select
                 className="p-2 outline-none rounded-md border dark:bg-dark-secondary dark:text-dark-title"
                 value={selectedYear}
@@ -119,7 +118,7 @@ export default function Home() {
                   </option>
                 ))}
               </select>
-            </div>
+            </div>}
 
           </div>
 

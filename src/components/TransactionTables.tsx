@@ -53,7 +53,7 @@ const TransactionTable = ({ transactions, type }: { transactions: BudgetModel[],
         <button
           disabled={transactions.length === 0 || filteredTransactions.length === 0}
           onClick={handleDownloadPDF}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-dark-primary text-white rounded-md hover:bg-blue-700 dark:hover:bg-dark-primary-hover  "
+          className={`${(transactions.length === 0 || filteredTransactions.length === 0) ? "flex items-center gap-2 bg-gray-500 text-gray-300 px-4 py-2 rounded cursor-not-allowed" : "flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-dark-primary text-white rounded-md hover:bg-blue-700 dark:hover:bg-dark-primary-hover"}`}
         >
           <FaRegFilePdf />
           <span>PDF İndir</span>

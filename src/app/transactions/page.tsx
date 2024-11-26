@@ -22,7 +22,8 @@ const Transactions = () => {
                 <div>
                     <button
                         onClick={() => setShowCard(true)}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+                        disabled={transactions.length === 0}
+                        className={`${transactions.length > 0 ? "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded" : "bg-gray-500 text-gray-300 px-4 py-2 rounded cursor-not-allowed"}`}
                     >
                         Tasarruf Önerilerini Göster
                     </button>
